@@ -40,8 +40,8 @@ RUN mv /app/config/nginx.conf /etc/nginx/sites-available/default &&\
   echo "daemon off;" >> /etc/nginx/nginx.conf && \
   mv /app/config/supervisor.conf /etc/supervisor/conf.d/
 
-ENV PORT 4443
-EXPOSE 4443
+ENV PORT 80
+EXPOSE 80
 CMD ["bash", "/app/start.sh"]
 
 ENV languages "en_core_web_md"
