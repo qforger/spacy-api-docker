@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
+import SpacyApiManager from './api/SpacyApiManager'
 import { Form, FormGroup, Label, Input, Button, Table } from 'reactstrap';
 type Todo = {
     userId: string,
@@ -8,12 +9,36 @@ type Todo = {
     title: string,
     completed: string
 };
-class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo> }> {
+class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyResponse:string }> {
+  spacyApiManager?:SpacyApiManager;
   constructor(props: any) {
     super(props);
     this.state = {
-        todos:[]
+        todos:[],
+        spacyResponse:""
     }
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  /*
+   Here we restrict all handleClicks to be exclusively on 
+   HTMLButton Elements
+  */
+   handleSubmit(e: { preventDefault: () => void; }) {
+    e.preventDefault();
+    console.log('You clicked submit.');
+    let responseData: any;
+    new Promise(async (res, rej) => {
+      this.spacyApiManager = new SpacyApiManager("Click on thing123 option, and check if at least one card with text containing thing123 appears, otherwise scroll down and try again.");
+      let data = await this.spacyApiManager.getSentencesWithDependencies();
+      res(data);
+    }).then((responseBody) => {
+      responseData = responseBody;
+    });
+    this.setState({
+      spacyResponse: responseData
+    });
+    console.log(this.state.spacyResponse);
   }
 
   componentDidMount() {
@@ -30,15 +55,15 @@ class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo> }> {
     return (
         <div className="App">
         <header className="App-header">
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for="inputSentence">
                 Sentence to parse:
               </Label>
               <Input
                 id="inputSentence"
-                name="email"
-                placeholder="enter sentence"
+                name="sentenceToParse"
+                placeholder="enter text"
                 type="text"
               />
             </FormGroup>
