@@ -89,6 +89,7 @@ ENV/
 .ropeproject
 
 frontend/node_modules
+frontend_react/node_modules
 .DS_Store
 .venv
 

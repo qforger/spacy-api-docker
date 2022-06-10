@@ -32,7 +32,7 @@ RUN echo "NODE Version:" && node --version
 RUN echo "NPM Version:" && npm --version
 
 # Build app
-RUN cd /app/frontend && make clean && make
+RUN cd /app/frontend_react && make clean && make
 RUN cd /app && make clean && make
 
 # Configure nginx & supervisor
@@ -45,4 +45,5 @@ EXPOSE 80
 CMD ["bash", "/app/start.sh"]
 
 ENV languages "en_core_web_md"
+#ENV languages "en_core_web_trf"
 RUN cd /app && env/bin/download_models

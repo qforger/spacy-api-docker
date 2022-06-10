@@ -3,7 +3,7 @@ class Parse(object):
         self.doc = nlp(text)
 
     def to_json(self):
-        words = [{'text': w.text, 'tag': w.tag_} for w in self.doc]
+        words = [{'text': w.text, 'pos': w.pos_, 'tag': w.tag_, 'head': w.head.text, 'dep': w.dep_} for w in self.doc]
         arcs = []
         for word in self.doc:
             if word.i < word.head.i:
@@ -11,8 +11,10 @@ class Parse(object):
                     {
                         'start': word.i,
                         'end': word.head.i,
+                        'head': word.head.text,
                         'label': word.dep_,
                         'text': str(word),
+                        'pos': word.pos_,
                         'dir': 'left'
                     })
             elif word.i > word.head.i:
@@ -20,8 +22,10 @@ class Parse(object):
                     {
                         'start': word.head.i,
                         'end': word.i,
+                        'head': word.head.text,
                         'label': word.dep_,
                         'text': str(word),
+                        'pos': word.pos_,
                         'dir': 'right'
                     })
         return {'words': words, 'arcs': arcs}
@@ -59,7 +63,7 @@ class SentencesDependencies(object):
     def to_json(self):
         sents = []
         for sent in self.doc.sents:
-            words = [{'text': w.text, 'tag': w.tag_} for w in sent]
+            words = [{'text': w.text, 'pos': w.pos_, 'tag': w.tag_, 'head': w.head.text, 'dep': w.dep_} for w in sent]
             arcs = []
             for word in sent:
                 if word.i < word.head.i:
@@ -67,8 +71,10 @@ class SentencesDependencies(object):
                         {
                             'start': word.i,
                             'end': word.head.i,
+                            'head': word.head.text,
                             'label': word.dep_,
                             'text': str(word),
+                            'pos': word.pos_,
                             'dir': 'left'
                         })
                 elif word.i > word.head.i:
@@ -76,8 +82,10 @@ class SentencesDependencies(object):
                         {
                             'start': word.head.i,
                             'end': word.i,
+                            'head': word.head.text,
                             'label': word.dep_,
                             'text': str(word),
+                            'pos': word.pos_,
                             'dir': 'right'
                         })
 
