@@ -47,3 +47,5 @@ CMD ["bash", "/app/start.sh"]
 ENV languages "en_core_web_md"
 #ENV languages "en_core_web_trf"
 RUN cd /app && env/bin/download_models
+#docker build -t spacy-api-docker:0.1 .
+#docker run -p "127.0.0.1:8080:80" -it spacy-api-docker:0.1
