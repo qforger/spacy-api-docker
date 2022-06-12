@@ -127,7 +127,7 @@ class DepResource(object):
         req_body = req.bounded_stream.read()
         json_data = json.loads(req_body.decode('utf8'))
         text = json_data.get('text')
-        model_name = json_data.get('model', 'en_core_web_md')
+        model_name = json_data.get('model', 'en_core_web_trf')
 
         try:
             model = get_model(model_name)
@@ -151,7 +151,7 @@ class EntResource(object):
         req_body = req.bounded_stream.read()
         json_data = json.loads(req_body.decode('utf8'))
         text = json_data.get('text')
-        model_name = json_data.get('model', 'en_core_web_md')
+        model_name = json_data.get('model', 'en_core_web_trf')
         try:
             model = get_model(model_name)
             entities = Entities(model, text)
@@ -175,7 +175,7 @@ class SentsResources(object):
         req_body = req.bounded_stream.read()
         json_data = json.loads(req_body.decode('utf8'))
         text = json_data.get('text')
-        model_name = json_data.get('model', 'en_core_web_md')
+        model_name = json_data.get('model', 'en_core_web_trf')
 
         try:
             model = get_model(model_name)
@@ -200,7 +200,7 @@ class SentsDepResources(object):
         req_body = req.bounded_stream.read()
         json_data = json.loads(req_body.decode('utf8'))
         text = json_data.get('text')
-        model_name = json_data.get('model', 'en_core_web_md')
+        model_name = json_data.get('model', 'en_core_web_trf')
 
         try:
             model = get_model(model_name)

@@ -11,7 +11,7 @@ class displaCy {
 
     this.format = options.format || 'spacy';
     this.defaultText = options.defaultText || 'Hello World.';
-    this.defaultModel = options.defaultModel || 'en_core_web_md';
+    this.defaultModel = options.defaultModel || 'en_core_web_trf';
 
     this.onStart = options.onStart || false;
     this.onSuccess = options.onSuccess || false;

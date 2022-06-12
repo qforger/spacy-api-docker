@@ -5,7 +5,7 @@ import SpacyApiRequester from "./SpacyApiRequester"
 
 class SpacyApiManager {
     sentence:string = 'displaCy uses JavaScript, SVG and CSS to show you how computers understand language';
-    model:string = 'en_core_web_md';
+    model:string = 'en_core_web_trf';
     format:string = 'spacy';
 
     constructor(sentence:string, model?:string, format?:string) {

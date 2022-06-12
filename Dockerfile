@@ -44,8 +44,8 @@ ENV PORT 9000
 
 CMD ["bash", "/app/start.sh"]
 
-ENV languages "en_core_web_md"
-#ENV languages "en_core_web_trf"
+#ENV languages "en_core_web_md"
+ENV languages "en_core_web_trf"
 RUN cd /app && env/bin/download_models
 #docker build -t spacy-api-docker:0.1 .
 #docker run -p 9000:9000/tcp -p 8000:8000/tcp -it spacy-api-docker:0.1 bash
