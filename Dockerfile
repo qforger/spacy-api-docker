@@ -8,8 +8,8 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libssl-dev \
     supervisor \
-    curl \
-    nginx && \
+    curl &&\
+#   nginx && \
     apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin
 
 COPY ./build_sassc.sh /app/build_sassc.sh
@@ -36,9 +36,9 @@ RUN cd /app/frontend_react && make clean && make
 RUN cd /app && make clean && make
 
 # Configure nginx & supervisor
-RUN mv /app/config/nginx.conf /etc/nginx/sites-available/default &&\
-  echo "daemon off;" >> /etc/nginx/nginx.conf && \
-  mv /app/config/supervisor.conf /etc/supervisor/conf.d/
+RUN mv /app/config/supervisor.conf /etc/supervisor/conf.d/
+#mv /app/config/nginx.conf /etc/nginx/sites-available/default &&\
+#  echo "daemon off;" >> /etc/nginx/nginx.conf && \
 
 ENV PORT 9000
 
@@ -48,4 +48,5 @@ ENV languages "en_core_web_md"
 #ENV languages "en_core_web_trf"
 RUN cd /app && env/bin/download_models
 #docker build -t spacy-api-docker:0.1 .
-#docker run -p "127.0.0.1:8080:80" -it spacy-api-docker:0.1
+#docker run -p 9000:9000/tcp -p 8000:8000/tcp -it spacy-api-docker:0.1 bash
+#docker exec -it c834d7805c8c bash

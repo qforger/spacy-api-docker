@@ -12,7 +12,7 @@ from .parse import Parse, Entities, Sentences, SentencesDependencies
 
 
 MODELS = os.getenv("languages", "").split()
-
+PORT_UI = os.getenv("PORT")
 _models = {}
 
 
@@ -56,8 +56,10 @@ class ModelsResource(object):
         try:
             output = list(MODELS)
             resp.body = json.dumps(output, sort_keys=True, indent=2)
-            resp.content_type = 'text/string'
-            resp.append_header('Access-Control-Allow-Origin', "*")
+            resp.content_type = 'text/plain'
+            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
+            resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
         except Exception as e:
             raise falcon.HTTPInternalServerError(
@@ -76,8 +78,10 @@ class VersionResource(object):
             resp.body = json.dumps({
                 "spacy": spacy.about.__version__
             }, sort_keys=True, indent=2)
-            resp.content_type = 'text/string'
-            resp.append_header('Access-Control-Allow-Origin', "*")
+            resp.content_type = 'text/plain'
+            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
+            resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
         except Exception as e:
             raise falcon.HTTPInternalServerError(
@@ -102,8 +106,10 @@ class SchemaResource(object):
             }
 
             resp.body = json.dumps(output, sort_keys=True, indent=2)
-            resp.content_type = 'text/string'
-            resp.append_header('Access-Control-Allow-Origin', "*")
+            resp.content_type = 'text/plain'
+            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
+            resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
         except Exception as e:
             raise falcon.HTTPBadRequest(
@@ -127,8 +133,10 @@ class DepResource(object):
             model = get_model(model_name)
             parse = Parse(model, text)
             resp.body = json.dumps(parse.to_json(), sort_keys=True, indent=2)
-            resp.content_type = 'text/string'
-            resp.append_header('Access-Control-Allow-Origin', "*")
+            resp.content_type = 'text/plain'
+            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
+            resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
         except Exception as e:
             raise falcon.HTTPBadRequest(
@@ -149,8 +157,10 @@ class EntResource(object):
             entities = Entities(model, text)
             resp.body = json.dumps(entities.to_json(), sort_keys=True,
                                    indent=2)
-            resp.content_type = 'text/string'
-            resp.append_header('Access-Control-Allow-Origin', "*")
+            resp.content_type = 'text/plain'
+            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
+            resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
         except Exception as e:
             raise falcon.HTTPBadRequest(
@@ -172,8 +182,10 @@ class SentsResources(object):
             sentences = Sentences(model, text)
             resp.body = json.dumps(sentences.to_json(), sort_keys=True,
                                    indent=2)
-            resp.content_type = 'text/string'
-            resp.append_header('Access-Control-Allow-Origin', "*")
+            resp.content_type = 'text/plain'
+            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
+            resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
         except Exception as e:
             raise falcon.HTTPBadRequest(
@@ -198,8 +210,10 @@ class SentsDepResources(object):
             resp.body = json.dumps(sentences.to_json(),
                                    sort_keys=True,
                                    indent=2)
-            resp.content_type = 'text/string'
-            resp.append_header('Access-Control-Allow-Origin', "*")
+            resp.content_type = 'text/plain'
+            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
+            resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
         except Exception as e:
             raise falcon.HTTPBadRequest(

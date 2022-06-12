@@ -9,15 +9,17 @@ type Todo = {
     title: string,
     completed: string
 };
-class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyResponse:string }> {
+class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyResponse:string, sentenceInput:string }> {
   spacyApiManager?:SpacyApiManager;
   constructor(props: any) {
     super(props);
     this.state = {
         todos:[],
-        spacyResponse:""
+        spacyResponse:"",
+        sentenceInput:""
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.updateInputValue = this.updateInputValue.bind(this);
   }
 
   /*
@@ -26,19 +28,27 @@ class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyRe
   */
    handleSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault();
-    console.log('You clicked submit.');
+    console.log('You clicked submit. Enter:' + this.state.sentenceInput);
     let responseData: any;
     new Promise(async (res, rej) => {
-      this.spacyApiManager = new SpacyApiManager("Click on thing123 option, and check if at least one card with text containing thing123 appears, otherwise scroll down and try again.");
+      this.spacyApiManager = new SpacyApiManager(this.state.sentenceInput);
       let data = await this.spacyApiManager.getSentencesWithDependencies();
       res(data);
     }).then((responseBody) => {
       responseData = responseBody;
+      this.setState({
+        spacyResponse: responseData
+      });
+      console.log(this.state.spacyResponse);
     });
+  }
+
+  updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value;
+    // ...       
     this.setState({
-      spacyResponse: responseData
+      sentenceInput: val
     });
-    console.log(this.state.spacyResponse);
   }
 
   componentDidMount() {
@@ -65,6 +75,8 @@ class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyRe
                 name="sentenceToParse"
                 placeholder="enter text"
                 type="text"
+                value={this.state.sentenceInput}
+                onChange={evt => this.updateInputValue(evt)}
               />
             </FormGroup>
             <Button>

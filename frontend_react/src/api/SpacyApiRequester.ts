@@ -11,8 +11,7 @@ class SpacyApiRequester {
                     { 'text': sentence, 'model': model },
                     {
                         headers: {
-                          'Content-Type': 'application/json',
-                          'Accept': 'application/json',
+                          'Content-Type': 'text/plain'
                         }
                     }
                 );

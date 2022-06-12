@@ -3,10 +3,10 @@
 all: node_modules
 
 node_modules:
-	npm install
+	/usr/bin/npm install
 
 clean:
 	rm -rfv node_modules/
 
 start: node_modules
-	npm start
+	/usr/bin/npm start
