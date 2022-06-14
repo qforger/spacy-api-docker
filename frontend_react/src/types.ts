@@ -3,11 +3,7 @@ export enum SpacyAPI {
     entities = '/ent',
     sents = '/sents',
     sents_dep = '/sents_dep',
+    all_pos = '/all_pos',
     models = '/models',
     version = '/version'
 }
-
-export type StacyResponse = {
-    body: string,
-    status: number
-};

@@ -3,12 +3,13 @@ import falcon
 import spacy
 import json
 import os
+import contextualSpellCheck
 
 from spacy.symbols import ENT_TYPE, TAG, DEP
 import spacy.about
 import spacy.util
 
-from .parse import Parse, Entities, Sentences, SentencesDependencies
+from .parse import Parse, Entities, Sentences, SentencesDependencies, Posalldependencies
 
 
 MODELS = os.getenv("languages", "").split()
@@ -19,6 +20,7 @@ _models = {}
 def get_model(model_name):
     if model_name not in _models:
         _models[model_name] = spacy.load(model_name)
+        #contextualSpellCheck.add_to_pipe(_models[model_name])
     return _models[model_name]
 
 
@@ -220,12 +222,40 @@ class SentsDepResources(object):
                 'Sentence tokenization and Dependency parsing failed',
                 '{}'.format(e))
 
+class Posallresources(object):
+    """Returns sentences PoS"""
+
+    def on_post(self, req, resp):
+        req_body = req.bounded_stream.read()
+        json_data = json.loads(req_body.decode('utf8'))
+        text = json_data.get('text')
+        model_name = json_data.get('model', 'en_core_web_trf')
+
+        try:
+            model = get_model(model_name)
+            sentences = Posalldependencies(model,
+                                            text)
+
+            resp.body = json.dumps(sentences.to_json(),
+                                   sort_keys=True,
+                                   indent=2)
+            resp.content_type = 'application/json'
+            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
+            resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
+            resp.status = falcon.HTTP_200
+        except Exception as e:
+            raise falcon.HTTPBadRequest(
+                'Sentence POS and Dependency parsing failed',
+                '{}'.format(e))
+
 
 APP = falcon.API()
 APP.add_route('/dep', DepResource())
 APP.add_route('/ent', EntResource())
 APP.add_route('/sents', SentsResources())
 APP.add_route('/sents_dep', SentsDepResources())
+APP.add_route('/all_pos', Posallresources())
 APP.add_route('/{model_name}/schema', SchemaResource())
 APP.add_route('/models', ModelsResource())
 APP.add_route('/version', VersionResource())

@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import './App.css';
 import SpacyApiManager from './api/SpacyApiManager'
 import { Form, FormGroup, Label, Input, Button, Table } from 'reactstrap';
 type Todo = {
@@ -63,8 +62,8 @@ class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyRe
   render() {
     let todos: Array<Todo> = this.state.todos;
     return (
-        <div className="App">
-        <header className="App-header">
+        <div>
+        <header>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for="inputSentence">
@@ -86,10 +85,10 @@ class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyRe
           <Table>
             <thead>
               <tr>
-                <th>User ID</th>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Completed</th>
+                <th scope="row">User ID</th>
+                <th scope="row">ID</th>
+                <th scope="row">Title</th>
+                <th scope="row">Completed</th>
               </tr>
             </thead>
             <tbody>

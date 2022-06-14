@@ -93,3 +93,15 @@ class SentencesDependencies(object):
                           'dep_parse': {'words': words,
                                         'arcs': arcs}})
         return sents
+
+
+class Posalldependencies(object):
+    def __init__(self, nlp, text):
+        self.doc = nlp(text)
+
+    def to_json(self):
+        sents = []
+        for sent in self.doc.sents:
+            words = [{'text': w.text, 'lemma': w.lemma_, 'norm': w.norm_, 'lower': w.lower_, 'sentiment': str(w.sentiment),'ent_type': w.ent_type_, 'pos': w.pos_, 'tag': w.tag_, 'dep': w.dep_, 'head': w.head.text, 'is_alpha': w.is_alpha, 'is_digit': w.is_digit, 'is_stop': w.is_stop, 'is_punct': w.is_punct, 'is_currency': w.is_currency, 'is_url': w.like_url, 'is_num': w.like_num, 'is_email': w.like_email, 'lang_': w.lang_ } for w in sent ]
+            sents.append({'sentence': sent.text.strip(), 'words': words})
+        return sents

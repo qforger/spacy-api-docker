@@ -7,7 +7,7 @@ class SpacyApiRequester {
         if(sentence && model) {
             try {
                 var response = await axios.post(
-                    `http://localhost:8000${SpacyAPI.sents_dep}`,
+                    `http://localhost:8000${SpacyAPI.all_pos}`,
                     { 'text': sentence, 'model': model },
                     {
                         headers: {
