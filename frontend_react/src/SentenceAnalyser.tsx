@@ -1,20 +1,19 @@
 import React from 'react';
-import axios from 'axios';
 import SpacyApiManager from './api/SpacyApiManager'
+import { PosAll, PosAllDependencies } from './types'
 import { Form, FormGroup, Label, Input, Button, Table } from 'reactstrap';
-type Todo = {
-    userId: string,
-    id: string,
-    title: string,
-    completed: string
-};
-class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyResponse:string, sentenceInput:string }> {
+class SentenceAnalyser extends React.Component<{}, {spacyResponse:PosAll | null, sentenceInput:string }> {
   spacyApiManager?:SpacyApiManager;
   constructor(props: any) {
     super(props);
+
+    let spavyDepAll:PosAll = {
+      sentence: "",
+      words: null
+    }
+    spavyDepAll.words = new Array<PosAllDependencies>(); 
     this.state = {
-        todos:[],
-        spacyResponse:"",
+        spacyResponse: spavyDepAll,
         sentenceInput:""
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,7 +30,7 @@ class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyRe
     let responseData: any;
     new Promise(async (res, rej) => {
       this.spacyApiManager = new SpacyApiManager(this.state.sentenceInput);
-      let data = await this.spacyApiManager.getSentencesWithDependencies();
+      let data:PosAll = await this.spacyApiManager.getSentencesWithDependencies();
       res(data);
     }).then((responseBody) => {
       responseData = responseBody;
@@ -51,16 +50,20 @@ class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyRe
   }
 
   componentDidMount() {
-    axios.get("https://jsonplaceholder.typicode.com/todos")
-      .then(response => {
-        this.setState({
-          todos: response.data
-        });
-      })
+    let spavyDepAll:PosAll = {
+      sentence: "",
+      words: null
+    }
+    spavyDepAll.words = new Array<PosAllDependencies>();
+    this.setState({
+        spacyResponse: spavyDepAll,
+        sentenceInput:""
+    });
   }
 
   render() {
-    let todos: Array<Todo> = this.state.todos;
+    let data:Array<PosAllDependencies>|null|undefined = this.state.spacyResponse?.words;
+    if(!data) data = new Array<PosAllDependencies>(); 
     return (
         <div>
         <header>
@@ -78,31 +81,78 @@ class SentenceAnalyser extends React.Component<{}, { todos: Array<Todo>, spacyRe
                 onChange={evt => this.updateInputValue(evt)}
               />
             </FormGroup>
-            <Button>
-              Submit
-            </Button>
+            <FormGroup>
+              <Button>
+                Submit
+              </Button>
+            </FormGroup>
+            <FormGroup>
+              <Label>Sentence received: {this.state.spacyResponse?.sentence}</Label>
+            </FormGroup> 
           </Form>
           <Table>
             <thead>
               <tr>
-                <th scope="row">User ID</th>
-                <th scope="row">ID</th>
-                <th scope="row">Title</th>
-                <th scope="row">Completed</th>
+                <th scope="row">Word</th>
+                <th scope="row">Lemma</th>
+                <th scope="row">Norm</th>
+                <th scope="row">LowCase</th>
+                <th scope="row">SentGrade</th>
+                <th scope="row">EntType</th>
+                <th scope="row">POS</th>
+                <th scope="row">Tag</th>
+                <th scope="row">DepType</th>
+                <th scope="row">DepTarget</th>
+                <th scope="row">Alpha</th>
+                <th scope="row">Digit</th>
+                <th scope="row">StopWord</th>
+                <th scope="row">Punct</th>
+                <th scope="row">Url</th>
+                <th scope="row">Number</th>
+                <th scope="row">Email</th>
+                <th scope="row">Language</th>
               </tr>
             </thead>
             <tbody>
-            {todos.length ? 
-              todos.map((todo:any) => (
+            {data.length ? 
+              data.map((dt:PosAllDependencies) => (
                 <tr>
-                  <td>{todo.userId}</td>
-                  <td>{todo.id}</td>
-                  <td>{todo.title}</td>
-                  <td>{todo.completed}</td>
+                  <td>{dt.word}</td>
+                  <td>{dt.lemma}</td>
+                  <td>{dt.norm}</td>
+                  <td>{dt.lower}</td>
+                  <td>{dt.sentiment}</td>
+                  <td>{dt.entityType}</td>
+                  <td>{dt.pos}</td>
+                  <td>{dt.tag}</td>
+                  <td>{dt.dep_type}</td>
+                  <td>{dt.dep_target}</td>
+                  <td>{dt.is_alpha}</td>
+                  <td>{dt.is_digit}</td>
+                  <td>{dt.is_stop}</td>
+                  <td>{dt.is_punct}</td>
+                  <td>{dt.is_url}</td>
+                  <td>{dt.is_num}</td>
+                  <td>{dt.is_email}</td>
+                  <td>{dt.language}</td>
                 </tr>
               ))
               : 
               (<tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
                 <td>-</td>
                 <td>-</td>
                 <td>-</td>

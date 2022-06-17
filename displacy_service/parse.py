@@ -102,6 +102,6 @@ class Posalldependencies(object):
     def to_json(self):
         sents = []
         for sent in self.doc.sents:
-            words = [{'text': w.text, 'lemma': w.lemma_, 'norm': w.norm_, 'lower': w.lower_, 'sentiment': str(w.sentiment),'ent_type': w.ent_type_, 'pos': w.pos_, 'tag': w.tag_, 'dep': w.dep_, 'head': w.head.text, 'is_alpha': w.is_alpha, 'is_digit': w.is_digit, 'is_stop': w.is_stop, 'is_punct': w.is_punct, 'is_currency': w.is_currency, 'is_url': w.like_url, 'is_num': w.like_num, 'is_email': w.like_email, 'lang_': w.lang_ } for w in sent ]
+            words = [{'text': w.text, 'lemma': w.lemma_, 'norm': w.norm_, 'lower': w.lower_, 'sentiment': str(w.sentiment),'ent_type': w.ent_type_, 'pos': w.pos_, 'tag': w.tag_, 'dep': w.dep_, 'head': w.head.text, 'is_alpha': str(w.is_alpha), 'is_digit': str(w.is_digit), 'is_stop': str(w.is_stop), 'is_punct': str(w.is_punct), 'is_currency': str(w.is_currency), 'is_url': str(w.like_url), 'is_num': str(w.like_num), 'is_email': str(w.like_email), 'language': w.lang_ } for w in sent ]
             sents.append({'sentence': sent.text.strip(), 'words': words})
         return sents

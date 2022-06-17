@@ -20,7 +20,6 @@ _models = {}
 def get_model(model_name):
     if model_name not in _models:
         _models[model_name] = spacy.load(model_name)
-        #contextualSpellCheck.add_to_pipe(_models[model_name])
     return _models[model_name]
 
 
@@ -233,6 +232,8 @@ class Posallresources(object):
 
         try:
             model = get_model(model_name)
+            #contextualSpellCheck.add_to_pipe(model)
+            #len(doc)
             sentences = Posalldependencies(model,
                                             text)
 

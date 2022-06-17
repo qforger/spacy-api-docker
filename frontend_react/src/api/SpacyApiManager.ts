@@ -1,5 +1,5 @@
 import SpacyApiRequester from "./SpacyApiRequester"
-
+import { PosAll } from '../types'
 
 class SpacyApiManager {
     sentence:string = 'displaCy uses JavaScript, SVG and CSS to show you how computers understand language';
@@ -12,7 +12,7 @@ class SpacyApiManager {
         this.format = format || this.format;
     }
 
-    public async getSentencesWithDependencies():Promise<string> {
+    public async getSentencesWithDependencies():Promise<PosAll> {
         return SpacyApiRequester.getDepSentencesResponse(this.sentence, this.model)
     }
 
