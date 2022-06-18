@@ -14,6 +14,7 @@ from .parse import Parse, Entities, Sentences, SentencesDependencies, Posalldepe
 
 MODELS = os.getenv("languages", "").split()
 PORT_UI = os.getenv("PORT")
+HOST_ADDR = os.getenv("HOST_ADDR")
 _models = {}
 
 
@@ -58,7 +59,7 @@ class ModelsResource(object):
             output = list(MODELS)
             resp.body = json.dumps(output, sort_keys=True, indent=2)
             resp.content_type = 'text/plain'
-            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Origin', f"{HOST_ADDR}:{PORT_UI}")
             resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
             resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
@@ -80,7 +81,7 @@ class VersionResource(object):
                 "spacy": spacy.about.__version__
             }, sort_keys=True, indent=2)
             resp.content_type = 'text/plain'
-            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Origin', f"{HOST_ADDR}:{PORT_UI}")
             resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
             resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
@@ -108,7 +109,7 @@ class SchemaResource(object):
 
             resp.body = json.dumps(output, sort_keys=True, indent=2)
             resp.content_type = 'text/plain'
-            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Origin', f"{HOST_ADDR}:{PORT_UI}")
             resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
             resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
@@ -135,7 +136,7 @@ class DepResource(object):
             parse = Parse(model, text)
             resp.body = json.dumps(parse.to_json(), sort_keys=True, indent=2)
             resp.content_type = 'text/plain'
-            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Origin', f"{HOST_ADDR}:{PORT_UI}")
             resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
             resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
@@ -159,7 +160,7 @@ class EntResource(object):
             resp.body = json.dumps(entities.to_json(), sort_keys=True,
                                    indent=2)
             resp.content_type = 'text/plain'
-            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Origin', f"{HOST_ADDR}:{PORT_UI}")
             resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
             resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
@@ -184,7 +185,7 @@ class SentsResources(object):
             resp.body = json.dumps(sentences.to_json(), sort_keys=True,
                                    indent=2)
             resp.content_type = 'text/plain'
-            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Origin', f"{HOST_ADDR}:{PORT_UI}")
             resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
             resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
@@ -212,7 +213,7 @@ class SentsDepResources(object):
                                    sort_keys=True,
                                    indent=2)
             resp.content_type = 'text/plain'
-            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Origin', f"{HOST_ADDR}:{PORT_UI}")
             resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
             resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200
@@ -241,7 +242,7 @@ class Posallresources(object):
                                    sort_keys=True,
                                    indent=2)
             resp.content_type = 'application/json'
-            resp.append_header('Access-Control-Allow-Origin', f"http://localhost:{PORT_UI}")
+            resp.append_header('Access-Control-Allow-Origin', f"{HOST_ADDR}:{PORT_UI}")
             resp.append_header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept")
             resp.append_header('Access-Control-Allow-Methods',"GET, POST, OPTIONS")
             resp.status = falcon.HTTP_200

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SpacyAPI, PosAll, PosAllDependencies } from '../types'
-
+const hostAddress: string = (process.env.REACT_APP_HOST_ADDR as string);
 class SpacyApiRequester {
     public static async getDepSentencesResponse(sentence:string, model:string):Promise<PosAll> {
         let posAll:PosAll = {
@@ -10,7 +10,7 @@ class SpacyApiRequester {
         if(sentence && model) {
             try {
                 var response = await axios.post(
-                    `http://localhost:8000${SpacyAPI.all_pos}`,
+                    `${hostAddress}:8000${SpacyAPI.all_pos}`,
                     { 'text': sentence, 'model': model },
                     {
                         headers: {

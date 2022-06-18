@@ -41,6 +41,8 @@ RUN mv /app/config/supervisor.conf /etc/supervisor/conf.d/
 #  echo "daemon off;" >> /etc/nginx/nginx.conf && \
 
 ENV PORT 9000
+ENV HOST_ADDR "http://localhost"
+ENV REACT_APP_HOST_ADDR ${HOST_ADDR}
 
 CMD ["bash", "/app/start.sh"]
 
