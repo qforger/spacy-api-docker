@@ -51,4 +51,5 @@ ENV languages "en_core_web_trf"
 RUN cd /app && env/bin/download_models
 #docker build -t spacy-api-docker:0.1 .
 #docker run -p 9000:9000/tcp -p 8000:8000/tcp -it spacy-api-docker:0.1 bash
+# sudo docker run -e HOST_ADDR=http://<ip> -e REACT_APP_HOST_ADDR=http://<ip> -p 9000:9000/tcp -p 8000:8000/tcp -it spacy-api-docker:0.1
 #docker exec -it c834d7805c8c bash
