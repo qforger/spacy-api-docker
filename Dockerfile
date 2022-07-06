@@ -48,10 +48,8 @@ ENV REACT_APP_HOST_PORT ${API_PORT}
 
 CMD ["bash", "/app/start.sh"]
 
-#it: ENV languages "it_core_news_sm"
-#en: ENV languages "en_core_web_trf en_core_web_md en_core_web_lg"
-#all: 
-ENV languages "en_core_web_trf de_core_news_sm es_core_news_sm fr_core_news_sm it_core_news_sm nl_core_news_sm pt_core_news_sm"
+#ENV languages "en_core_web_md"
+ENV languages "en_core_web_trf"
 RUN cd /app && env/bin/download_models
 #docker build -t spacy-api-docker:0.1 .
 #docker run -p 9000:9000/tcp -p 8000:8000/tcp -it spacy-api-docker:0.1 bash
