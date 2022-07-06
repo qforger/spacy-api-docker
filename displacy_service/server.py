@@ -27,24 +27,24 @@ def get_model(model_name):
 def get_dep_types(model):
     '''List the available dep labels in the model.'''
     labels = []
-    for label_id in model.parser.moves.freqs[DEP]:
-        labels.append(model.vocab.strings[label_id])
+    for label in model._meta['labels']['parser']:
+        labels.append(label)
     return labels
 
 
 def get_ent_types(model):
     '''List the available entity types in the model.'''
     labels = []
-    for label_id in model.entity.moves.freqs[ENT_TYPE]:
-        labels.append(model.vocab.strings[label_id])
+    for label in model._meta['labels']['ner']:
+        labels.append(label)
     return labels
 
 
 def get_pos_types(model):
     '''List the available part-of-speech tags in the model.'''
     labels = []
-    for label_id in model.tagger.moves.freqs[TAG]:
-        labels.append(model.vocab.strings[label_id])
+    for label in model._meta['labels']['tagger']:
+        labels.append(label)
     return labels
 
 
