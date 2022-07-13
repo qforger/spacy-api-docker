@@ -42,7 +42,9 @@ RUN mv /app/config/supervisor.conf /etc/supervisor/conf.d/
 
 ENV PORT 9000
 ENV HOST_ADDR "http://localhost"
+ENV API_PORT 18000
 ENV REACT_APP_HOST_ADDR ${HOST_ADDR}
+ENV REACT_APP_HOST_PORT ${API_PORT}
 
 CMD ["bash", "/app/start.sh"]
 
